@@ -24,9 +24,9 @@ zig build test
 
 `check` compiles, links and configures the executable without installing or
 launching it. `test` checks Windows resource serialization, PE compatibility,
-the login fade's animation clock and effect blending after particle, shadow and
-clothing passes. The native tests require
-Windows; the rendering test uses D3D11 WARP and `d3dcompiler_47.dll` without game
+the login fade's animation clock, camera timing and effect blending after
+particle, shadow and clothing passes. The native tests require Windows; the
+rendering test uses D3D11 WARP and `d3dcompiler_47.dll` without game
 assets or a visible window. These checks do not exercise server interaction or
 gameplay.
 

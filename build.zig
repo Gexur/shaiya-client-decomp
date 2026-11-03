@@ -91,6 +91,11 @@ pub fn build(b: *std.Build) void {
     }, &.{"kernel32"});
     test_step.dependOn(&b.addRunArtifact(animation_tests).step);
 
+    const camera_tests = clientTest(b, target, "login-camera-test", "login_camera_test_entry", &.{
+        "tests/login_camera.cpp", "src/client/graphics/native_login_camera.cpp",
+    }, &.{"kernel32"});
+    test_step.dependOn(&b.addRunArtifact(camera_tests).step);
+
     const particle_tests = clientTest(b, target, "particle-state-test", "particle_state_test_entry", &.{
         "tests/particle_state.cpp",
         "src/client/graphics/native_resources.cpp",
