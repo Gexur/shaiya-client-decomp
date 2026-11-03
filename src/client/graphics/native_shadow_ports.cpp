@@ -5,6 +5,10 @@
 extern "C" {
 extern unsigned char dat_02209408[];
 extern float dat_0220aa50[16], dat_0220aa90[16], dat_0220bee8[16];
+void __cdecl native_scene_style_defaults();
+void __attribute__((stdcall)) native_scene_blending(UINT);
+void __attribute__((stdcall)) native_scene_depth_write(UINT);
+void __attribute__((stdcall)) native_scene_alpha_test(UINT);
 }
 namespace {
 using namespace shaiya::graphics::native;
@@ -128,6 +132,13 @@ extern "C" HRESULT __attribute__((thiscall)) FUN_00548860(void* owner) {
 }
 extern "C" void __attribute__((thiscall)) FUN_00548880(void* owner) {
     using namespace shaiya::graphics::native;
+    // Original 00548908 resets the controller through FUN_00542bf0, including
+    // enabling alpha blending. Its final 00548ae1/00548af3 calls disable depth
+    // writes and alpha testing. Later weapon EFT draws inherit these states.
+    native_scene_style_defaults();
+    native_scene_blending(1);
+    native_scene_depth_write(0);
+    native_scene_alpha_test(0);
     Matrix bias = identity();
     bias.m[0][0] = .5f;
     bias.m[1][1] = -.5f;

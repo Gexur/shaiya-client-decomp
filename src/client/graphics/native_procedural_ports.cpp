@@ -4,6 +4,11 @@ using namespace shaiya::graphics::native;
 extern "C" {
 extern unsigned char dat_02209408[];
 extern Buffer* dat_02221c30;
+void __attribute__((stdcall)) native_scene_blending(UINT);
+void __attribute__((stdcall)) native_scene_alpha_test(UINT);
+void __cdecl native_material_source_alpha();
+void __cdecl native_scene_blend_alpha();
+void __cdecl native_scene_cull_none();
 }
 namespace {
 UINT& word(void* object, UINT offset) {
@@ -18,6 +23,16 @@ const float* floats(void* object, UINT offset) {
 Buffer* scratch(UINT count) {
     auto* buffer = pointer<Buffer>(dat_02209408, 860);
     return buffer && buffer->stride == 24 && count <= buffer->size / 24 ? buffer : nullptr;
+}
+void cloth_material() {
+    // Original 00581b64..00581bfc and 00581da7..00581e3f leave these
+    // controller states active even when the buffer lock fails. Weapon EFT
+    // draws follow the clothing pass and inherit its enabled blending.
+    native_scene_cull_none();
+    native_scene_blending(1);
+    native_scene_alpha_test(1);
+    native_material_source_alpha();
+    native_scene_blend_alpha();
 }
 HRESULT submit(void* owner, Buffer& vertices, UINT count, UINT triangles) {
     auto* indices = pointer<Buffer>(owner, 0x50);
@@ -92,6 +107,7 @@ extern "C" HRESULT __attribute__((thiscall)) FUN_00581b30(void* owner) {
     const int rows = int(word(owner, 8)), columns = int(word(owner, 12));
     const UINT count = word(owner, 0x54);
     Buffer* buffer = scratch(count);
+    cloth_material();
     if (!buffer || !count || rows < 0 || columns < 0 || UINT(rows) >= count ||
         UINT(columns) >= count || UINT(rows + 1) > count / UINT(columns + 1))
         return E_INVALIDARG;
@@ -118,6 +134,7 @@ extern "C" HRESULT __attribute__((thiscall)) FUN_00581d70(void* owner, void* sam
     const int rows = int(word(owner, 8)), columns = int(word(owner, 12));
     const UINT count = word(owner, 0x54);
     Buffer* buffer = scratch(count);
+    cloth_material();
     if (!buffer || !count || rows < 0 || columns < 0 || UINT(rows) >= count ||
         UINT(columns) >= count || UINT(rows + 1) > count / UINT(columns + 1))
         return E_INVALIDARG;

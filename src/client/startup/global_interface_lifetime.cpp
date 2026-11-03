@@ -3,7 +3,8 @@
 #include "../runtime/exit_registry.h"
 extern "C" {
 const OriginalInterfaceDeleting dat_006cd2a8[1] = {FUN_00584d30};
-const OriginalInterfaceDeleting* dat_0070c0ac = dat_006cd2a8;
+OriginalCloakTextureTables36 dat_0070c0ac = {
+    dat_006cd2a8, nullptr, nullptr, nullptr, nullptr, 0, 0, 0, 0};
 }
 extern "C" void* __attribute__((thiscall)) FUN_00584d30(void* object, uint32_t flags) {
     *static_cast<const OriginalInterfaceDeleting**>(object) = dat_006cd2a8;
@@ -15,5 +16,5 @@ extern "C" void fun_006b7670() {
     (void)fun_005ccf60(fun_006ba730);
 }
 extern "C" void fun_006ba730() {
-    dat_0070c0ac = dat_006cd2a8;
+    dat_0070c0ac.vtable = dat_006cd2a8;
 }

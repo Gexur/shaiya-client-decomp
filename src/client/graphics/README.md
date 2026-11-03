@@ -26,7 +26,12 @@ compiler is required to build the client.
 Terrain preserves material ranges and authored texture addressing. Actor passes
 retain independent transforms and lighting. Portrait, reflection and shadow
 passes restore their render targets and scene state. Animation timing retains
-fractional milliseconds and shares elapsed time across scene consumers.
+fractional milliseconds and shares elapsed time across scene consumers. Nested
+menu fades refresh that interval on every update, including frames shorter than
+one millisecond.
+
+Shadow, clothing and particle passes preserve the original shared blend-state
+transitions so subsequent weapon effects retain their authored transparency.
 
 The optional BumpReflect material uses an authored native shader. The original
 external `BumpWater_R.fx` source was unavailable, so exact pixel equivalence for

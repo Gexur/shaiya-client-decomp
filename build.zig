@@ -76,7 +76,7 @@ pub fn build(b: *std.Build) void {
     if (b.args) |args| run.addArgs(args) else run.addArgs(&.{ "start", "game" });
     b.step("run", "Build and launch the installed client with its runtime assets").dependOn(&run.step);
 
-    const test_step = b.step("test", "Test Windows resource serialization and PE compatibility handling");
+    const test_step = b.step("test", "Test resources, PE compatibility, animation timing and effect rendering");
     for ([_][]const u8{ "build_support/resources.zig", "build_support/pe.zig" }) |source| {
         const tests = b.addTest(.{ .root_module = b.createModule(.{
             .root_source_file = b.path(source),
@@ -85,6 +85,41 @@ pub fn build(b: *std.Build) void {
         }) });
         test_step.dependOn(&b.addRunArtifact(tests).step);
     }
+
+    const animation_tests = clientTest(b, target, "animation-timing-test", "animation_timing_test_entry", &.{
+        "tests/animation_timing.cpp", "src/client/graphics/native_animation_timing.cpp",
+    }, &.{"kernel32"});
+    test_step.dependOn(&b.addRunArtifact(animation_tests).step);
+
+    const particle_tests = clientTest(b, target, "particle-state-test", "particle_state_test_entry", &.{
+        "tests/particle_state.cpp",
+        "src/client/graphics/native_resources.cpp",
+        "src/client/graphics/native_render_passes.cpp",
+        "src/client/graphics/native_scene_ports.cpp",
+        "src/client/graphics/native_shadow_ports.cpp",
+        "src/client/graphics/native_procedural_ports.cpp",
+        "src/client/graphics/native_effect_ports.cpp",
+        "src/client/graphics/native_controller_state.cpp",
+        "src/client/graphics/native_render_target.cpp",
+        "src/client/core/memory.cpp",
+        "src/client/core/stack_probe.cpp",
+    }, &.{ "d3d11", "dxgi", "kernel32", "user32", "gdi32", "ole32" });
+    test_step.dependOn(&b.addRunArtifact(particle_tests).step);
+}
+
+fn clientTest(b: *std.Build, target: std.Build.ResolvedTarget, name: []const u8, entry: []const u8, sources: []const []const u8, libraries: []const []const u8) *std.Build.Step.Compile {
+    const module = clientModule(b, target, .ReleaseFast);
+    for (sources) |source| module.addCSourceFile(.{
+        .file = b.path(source),
+        .flags = cxxFlags(b, source, .ReleaseFast, false),
+    });
+    for (libraries) |library| module.linkSystemLibrary(library, .{ .use_pkg_config = .no });
+    const tests = b.addExecutable(.{ .name = name, .root_module = module });
+    tests.entry = .{ .symbol_name = entry };
+    tests.subsystem = .console;
+    tests.bundle_compiler_rt = false;
+    tests.lto = .none;
+    return tests;
 }
 
 fn clientModule(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode) *std.Build.Module {

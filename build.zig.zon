@@ -3,5 +3,5 @@
     .version = "0.1.0",
     .fingerprint = 0x245fe21ed8d462b3,
     .minimum_zig_version = "0.16.0",
-    .paths = .{ "build.zig", "build.zig.zon", "build_support", "src", "docs", "README.md", "AGENTS.md", "mise.toml", ".clang-format", ".clang-format-ignore", ".clangd", ".gitignore", ".vscode", "shaiya-game-decomp.code-workspace" },
+    .paths = .{ "build.zig", "build.zig.zon", "build_support", "src", "tests", "docs", "README.md", "AGENTS.md", "mise.toml", ".clang-format", ".clang-format-ignore", ".clangd", ".gitignore", ".vscode", "shaiya-game-decomp.code-workspace" },
 }

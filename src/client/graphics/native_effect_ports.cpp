@@ -23,6 +23,11 @@ void __attribute__((stdcall)) native_scene_blending(UINT);
 void __attribute__((stdcall)) native_scene_alpha_test(UINT);
 void __attribute__((stdcall)) native_scene_lighting(UINT);
 void __attribute__((stdcall)) native_scene_tint(UINT);
+void __attribute__((stdcall)) native_scene_depth_write(UINT);
+void __attribute__((stdcall)) native_scene_alpha_reference(UINT);
+void __cdecl native_material_source_alpha();
+void __cdecl native_scene_blend_alpha();
+void __cdecl native_scene_blend_additive();
 }
 
 using namespace shaiya::graphics::native;
@@ -49,6 +54,29 @@ UINT particle_material = 0;
 extern "C" void __attribute__((stdcall)) native_particle_material(void* owner) {
     particle_material = word(owner, 8);
     set_scene_diffuse(pointer<Texture2D>(owner, 0x124));
+    // Original 0052e8be..0052ea81 changes the shared controller state, not
+    // just the particle draw. The following EFT passes inherit this enabled
+    // blend state even when the preceding opaque actor disabled blending.
+    native_scene_blending(1);
+    native_material_source_alpha();
+    native_scene_depth_write(0);
+    if (particle_material < 4) {
+        if (particle_material == 0 || particle_material == 3)
+            native_scene_blend_additive();
+        else
+            native_scene_blend_alpha();
+        native_scene_alpha_test(particle_material >= 2);
+        if (particle_material >= 2)
+            native_scene_alpha_reference(80);
+    }
+}
+
+extern "C" void __cdecl native_particle_complete() {
+    // Original 0052eb76..0052ebb0 restores depth writes and destination
+    // inverse alpha, while leaving blending enabled for subsequent effects.
+    native_scene_depth_write(1);
+    native_scene_blend_alpha();
+    scene_draw_context().material.style.tint = {1, 1, 1, 1};
 }
 
 extern "C" HRESULT __attribute__((stdcall)) native_particle_quad(Buffer* buffer) {

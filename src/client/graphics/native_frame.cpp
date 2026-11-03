@@ -1,6 +1,7 @@
 #include "graphics/native_renderer.h"
 #include "graphics/native_font.h"
 #include "graphics/native_scene_ports.h"
+#include "graphics/native_animation_timing.h"
 #include "startup/client_clock.h"
 #include "startup/application.h"
 #include "core/x87_runtime.h"
@@ -133,6 +134,7 @@ extern "C" uint32_t __attribute__((thiscall)) FUN_00420d90(void* self, UINT dire
     values[7] = direction == 0 ? 1.0f : 0.0f;
     dat_00719a50 = static_cast<float>(FUN_00405840(5));
     dat_00719a54 = static_cast<float>(FUN_00405840(6));
+    native_world_animation_begin_frame(dat_00719a54);
     return 1;
 }
 
