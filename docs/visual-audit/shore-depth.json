@@ -1,0 +1,176 @@
+{
+  "status": "completed_controlled_d3d9_d3d11_depth_comparison",
+  "run_utc": "2026-11-03T06:36:12Z",
+  "client_commit": "030082fa8a6b70dc0cfb020abffeac2086762291",
+  "executable_sha256": "7a9bdc274dac9a7e26e1f3e26a20b6cb6c0c1c233acd2838a03500534cc8327b",
+  "source_inputs_sha256": {
+    "src/client/graphics/native_render_passes.cpp": "d2f8d3e71e27cfb998026a4994826077e9f8657937b3b67536c3d662dae33d02",
+    "src/client/graphics/native_render_passes.h": "f3c9e9a8f052ae2be4999122ba30b99236f558e68855100664ab45f3beddcad2",
+    "src/client/graphics/native_renderer.h": "41a461a18413171084e13406bde41348425580c13314d871714c57b3f0dc483f",
+    "src/client/graphics/native_render_shaders.h": "377c30f8daefb2e2ac9148af628edccef4f0da5122d87d97f81ef8019be88e44",
+    "src/client/graphics/native_draw_probe.h": "fb1d50cccae1cd0473fe6ae77c4cc8b50ef98fbdacc0bbf034c50d858ab041b4",
+    "src/client/graphics/native_resources.cpp": "8cfff8ffc43b070557d9cfbf7601091dee408a8a533162a3f956c3e40fb0e14e",
+    "src/client/graphics/native_resources.h": "d6ccb5b289d214dc626478b3b6eed82ea6a1eea17ded4508a01b900dc9d93a68",
+    "src/client/graphics/native_texture_decode.inc": "d95d69527d086d7dda276baac8ee232c732973108db2838ca29908d93fe65c75",
+    "src/client/graphics/native_renderer.cpp": "8374c299299b6d24af468612828e6d59af80fab9429b5a966c55943d8fc88396",
+    "src/client/graphics/native_scene_ports.h": "fb7baad6db9b273a9263a496a756cb3618b632d35e853b0df7b82a5877283308",
+    "src/client/graphics/native_render_target.cpp": "85faac5123c1bb2d9af2326206539467b4306a106f2c51346b829a2d36313166",
+    "src/client/graphics/native_render_target.h": "b99d4b4a52d0f7dcc4239c014ac2a6653a0d5e48befc492f361209780c47d865",
+    "src/client/graphics/native_scene_ports.cpp": "0339f00180510dd257d03f4621443f853d4cfd39a78053fbb2e2ae7e07ce7221",
+    "src/client/core/memory.cpp": "9fbadc5067f8ad488a54a50d91e693e1dae1d5eb2bd07f827e75a42bcea9cccf",
+    "src/client/core/memory.h": "b14a105b1caf12c0f538f2dcce989acc86b9a3a8eccae68dc68122e197872367",
+    "src/client/core/stack_probe.cpp": "83978fb0837b5b46ec040878aa733969a19543b4effa69ec46a8b67ac80c495e",
+    "tools/fixtures/native_shore_depth.cpp": "28232cdc44600dd49af3c4d72f119c3db4ff62388bb637726fa08a1ad237fa00",
+    "src/client/graphics/native_geometry_ports.cpp": "52a2fd7f2a72fdd91afadcf1df196010b8c2b3a2a35dc2372949f2fbf9615bda",
+    "tools/fixtures/native_shore_depth_capture.zip": "55e7466a63d30a12c114019f3d7d801a4c4803cb90f801046d5efb19a6f369cd",
+    "tools/verify_native_shore_depth.py": "26454dce28116f1f36318fb46c892ce4afd71f18d61a79694365fa2ce580d834"
+  },
+  "captured_scene": {
+    "terrain_vertices": 2564,
+    "terrain_indices": 13710,
+    "player_position": [
+      337.5643310546875,
+      1.3019946813583374,
+      1277.25
+    ],
+    "capture_sha256": "55e7466a63d30a12c114019f3d7d801a4c4803cb90f801046d5efb19a6f369cd"
+  },
+  "cases": {
+    "coarse-control": {
+      "temporal": {
+        "d3d9": {
+          "repeated_pixel_flips": 1164,
+          "maximum_flips": 5
+        },
+        "native": {
+          "repeated_pixel_flips": 780,
+          "maximum_flips": 5
+        }
+      },
+      "paired": [
+        {
+          "phase": 0,
+          "different_pixels": 116,
+          "total_pixels": 163840,
+          "percent": 0.07080078125
+        },
+        {
+          "phase": 1,
+          "different_pixels": 307,
+          "total_pixels": 163840,
+          "percent": 0.1873779296875
+        },
+        {
+          "phase": 2,
+          "different_pixels": 832,
+          "total_pixels": 163840,
+          "percent": 0.5078125
+        },
+        {
+          "phase": 3,
+          "different_pixels": 103,
+          "total_pixels": 163840,
+          "percent": 0.0628662109375
+        },
+        {
+          "phase": 4,
+          "different_pixels": 120,
+          "total_pixels": 163840,
+          "percent": 0.0732421875
+        },
+        {
+          "phase": 5,
+          "different_pixels": 401,
+          "total_pixels": 163840,
+          "percent": 0.2447509765625
+        },
+        {
+          "phase": 6,
+          "different_pixels": 429,
+          "total_pixels": 163840,
+          "percent": 0.2618408203125
+        },
+        {
+          "phase": 7,
+          "different_pixels": 379,
+          "total_pixels": 163840,
+          "percent": 0.2313232421875
+        }
+      ],
+      "elapsed_seconds": 2.623
+    },
+    "production": {
+      "temporal": {
+        "d3d9": {
+          "repeated_pixel_flips": 1164,
+          "maximum_flips": 5
+        },
+        "native": {
+          "repeated_pixel_flips": 50,
+          "maximum_flips": 5
+        }
+      },
+      "paired": [
+        {
+          "phase": 0,
+          "different_pixels": 223,
+          "total_pixels": 163840,
+          "percent": 0.1361083984375
+        },
+        {
+          "phase": 1,
+          "different_pixels": 522,
+          "total_pixels": 163840,
+          "percent": 0.318603515625
+        },
+        {
+          "phase": 2,
+          "different_pixels": 590,
+          "total_pixels": 163840,
+          "percent": 0.360107421875
+        },
+        {
+          "phase": 3,
+          "different_pixels": 617,
+          "total_pixels": 163840,
+          "percent": 0.3765869140625
+        },
+        {
+          "phase": 4,
+          "different_pixels": 84,
+          "total_pixels": 163840,
+          "percent": 0.05126953125
+        },
+        {
+          "phase": 5,
+          "different_pixels": 576,
+          "total_pixels": 163840,
+          "percent": 0.3515625
+        },
+        {
+          "phase": 6,
+          "different_pixels": 473,
+          "total_pixels": 163840,
+          "percent": 0.2886962890625
+        },
+        {
+          "phase": 7,
+          "different_pixels": 451,
+          "total_pixels": 163840,
+          "percent": 0.2752685546875
+        }
+      ],
+      "elapsed_seconds": 2.601
+    }
+  },
+  "comparison_image": "shoreline-comparison.png",
+  "comparison_phase": 3,
+  "limits": [
+    "Eight tiny yaw steps of the actual captured Rivalis camera and BOAM terrain; two-color water/terrain isolate depth.",
+    "Both APIs use D24S8 LESS_EQUAL with zero bias; the production cache fixture separately verifies unchanged height/UV/RGBA and lifetime.",
+    "D3D9 is an independent hidden validation oracle only. Production rendering remains native D3D11.",
+    "A residual subpixel boundary can still alias; this verifies reduction of unstable depth, not universal antialiasing.",
+    "Re-executed the retained oracle after verifying every recorded input and its executable hash; all 17 production source inputs match the current standalone checkout.",
+    "The oracle uses solid colors and captured geometry. Paired-pixel percentages describe this controlled shoreline only, not whole-client visual similarity."
+  ]
+}

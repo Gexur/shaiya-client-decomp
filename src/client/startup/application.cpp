@@ -1,4 +1,5 @@
 #include "startup/application.h"
+#include "startup/window_title.h"
 #include "core/string.h"
 #include "startup/timing.h"
 #include "config/initialization.hpp"
@@ -21,6 +22,7 @@ using shaiya::config::FUN_005cd489;
 using shaiya::config::initialize_client_configuration;
 using shaiya::startup::Pair_0040abc0;
 using shaiya::startup::String_00405710;
+using shaiya::startup::gGameWindowName;
 using shaiya::ui::FUN_005cc96d;
 
 extern "C" {
@@ -428,7 +430,7 @@ extern "C" int32_t __attribute__((stdcall)) run_client_application(HINSTANCE ins
         return 0;
     }
     const auto find_window = &FindWindowA;
-    if (find_window("GAME", "Shaiya") != nullptr) {
+    if (find_window("GAME", gGameWindowName) != nullptr) {
         MessageBoxA(nullptr, FUN_0041d4a0(0x2746), "ERROR!", MB_ICONWARNING);
         PostQuitMessage(0);
         return 0;

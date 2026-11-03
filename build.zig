@@ -97,7 +97,7 @@ fn clientModule(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.b
         .sanitize_c = .off,
     });
     module.addIncludePath(b.path("src/client"));
-    // Only header-only C++ facilities (placement new and type traits) are used.
+    // The client's C++ standard library facilities are header-only.
     // Supply Zig's headers without linking a second C++ runtime.
     module.addIncludePath(.{ .cwd_relative = b.pathJoin(&.{ b.graph.zig_lib_directory.path.?, "libcxx", "include" }) });
     module.addCMacro("_LIBCPP_HARDENING_MODE_DEFAULT", "_LIBCPP_HARDENING_MODE_NONE");

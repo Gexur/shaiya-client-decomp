@@ -34,5 +34,7 @@ that material is unverified. Complete client rendering/gameplay equivalence
 requires runtime testing beyond a successful source build.
 
 See the [build guide](../../../docs/building.md) for current build/run instructions.
+The [visual parity audit](../../../docs/visual-parity-audit.md) records known
+differences from D3D9, measured shoreline behavior and unverified areas.
 The [historical notes](../../../docs/history/README.md) preserve earlier finite
 rendering observations from the original workspace.

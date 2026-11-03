@@ -1,13 +1,16 @@
 #include "startup/window.h"
+#include "startup/window_title.h"
 #include "startup/application.h"
 #include "startup/timing.h"
 #include "network/packets.h"
 #include "network/outbound.h"
 #include "config/initialization.hpp"
 #include "ui/constructors.hpp"
+#include <array>
 
 using shaiya::config::DAT_00719a40;
 using shaiya::config::DAT_00719a44;
+using shaiya::startup::gGameWindowName;
 using shaiya::ui::FUN_005cc96d;
 extern "C" {
 // Original data definitions are in window_storage.cpp.
@@ -33,6 +36,12 @@ constexpr uintptr_t kContentWindowOffset = 0x08;
 constexpr uintptr_t kVisibilityFlagOffset = 0x14;
 constexpr uintptr_t kPreviousGameLeftOffset = 0x20;
 constexpr uintptr_t kPreviousGameTopOffset = 0x24;
+constexpr auto gGameWindowNameWide = [] {
+    std::array<wchar_t, sizeof(gGameWindowName)> title{};
+    for (std::size_t index = 0; index < title.size(); ++index)
+        title[index] = static_cast<unsigned char>(gGameWindowName[index]);
+    return title;
+}();
 
 /**
  * Read a little-endian DWORD from an opaque x86 object without requiring alignment.
@@ -184,9 +193,9 @@ extern "C" void __cdecl create_game_window_ansi(uint32_t window_style, int32_t l
     window_class.lpszClassName = "GAME";
     window_class.hIconSm = nullptr;
     RegisterClassExA(&window_class);
-    dat_00719a3c = CreateWindowExA(0, "GAME", "Shaiya XD", window_style, left, top, window_width,
-                                   window_height, nullptr, nullptr,
-                                   static_cast<HINSTANCE>(DAT_00719a40), nullptr);
+    dat_00719a3c = CreateWindowExA(0, "GAME", gGameWindowName, window_style, left, top,
+                                 window_width, window_height, nullptr, nullptr,
+                                 static_cast<HINSTANCE>(DAT_00719a40), nullptr);
 }
 
 /**
@@ -218,9 +227,9 @@ extern "C" void __cdecl create_game_window_unicode(uint32_t window_style, int32_
     window_class.lpszClassName = L"GAME";
     window_class.hIconSm = nullptr;
     RegisterClassExW(&window_class);
-    dat_00719a3c = CreateWindowExW(0, L"GAME", L"Shaiya XD", window_style, left, top, window_width,
-                                   window_height, nullptr, nullptr,
-                                   static_cast<HINSTANCE>(DAT_00719a40), nullptr);
+    dat_00719a3c = CreateWindowExW(0, L"GAME", gGameWindowNameWide.data(), window_style, left, top,
+                                 window_width, window_height, nullptr, nullptr,
+                                 static_cast<HINSTANCE>(DAT_00719a40), nullptr);
 }
 
 /**
