@@ -76,7 +76,7 @@ pub fn build(b: *std.Build) void {
     if (b.args) |args| run.addArgs(args) else run.addArgs(&.{ "start", "game" });
     b.step("run", "Build and launch the installed client with its runtime assets").dependOn(&run.step);
 
-    const test_step = b.step("test", "Test resources, PE compatibility, animation timing and effect rendering");
+    const test_step = b.step("test", "Test resources, PE compatibility, animation, effects and connection overrides");
     for ([_][]const u8{ "build_support/resources.zig", "build_support/pe.zig" }) |source| {
         const tests = b.addTest(.{ .root_module = b.createModule(.{
             .root_source_file = b.path(source),
@@ -95,6 +95,19 @@ pub fn build(b: *std.Build) void {
         "tests/login_camera.cpp", "src/client/graphics/native_login_camera.cpp",
     }, &.{"kernel32"});
     test_step.dependOn(&b.addRunArtifact(camera_tests).step);
+
+    const version_tests = clientTest(b, target, "client-version-test", "client_version_test_entry", &.{
+        "tests/client_version.cpp",
+        "src/client/config/development_version.cpp",
+        "src/client/network/outbound.cpp",
+        "src/client/crypto/transport.cpp",
+        "src/client/crypto/aes.cpp",
+        "src/client/crypto/lcg_stream.cpp",
+        "src/client/crypto/sha256.cpp",
+        "src/client/core/stack_probe.cpp",
+        "src/client/core/memory.cpp",
+    }, &.{ "kernel32", "user32", "ws2_32" });
+    test_step.dependOn(&b.addRunArtifact(version_tests).step);
 
     const particle_tests = clientTest(b, target, "particle-state-test", "particle_state_test_entry", &.{
         "tests/particle_state.cpp",

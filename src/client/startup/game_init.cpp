@@ -5,6 +5,7 @@
 #include "../network/window_transport.h"
 #include "../config/initialization.hpp"
 #include "../config/development_endpoint.h"
+#include "../config/development_version.h"
 #include "../platform/support.hpp"
 #include "../ui/constructors.hpp"
 #include <mmsystem.h>
@@ -130,6 +131,7 @@ extern "C" int32_t __cdecl FUN_0040b2d0() {
     fun_0058d4c0(dat_0223f100);
     // Explicit development policy; the original connection/handshake still runs.
     shaiya_apply_development_login_host(DAT_007198b0, sizeof(DAT_007198b0));
+    shaiya_apply_development_client_version();
     if (fun_0058d3f0(DAT_007198b0, 0x7850) != 0) {
         error_with_copied_caption(0x274c, 0x274b);
         return 0;

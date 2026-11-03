@@ -25,10 +25,11 @@ zig build test
 `check` compiles, links and configures the executable without installing or
 launching it. `test` checks Windows resource serialization, PE compatibility,
 the login fade's animation clock, camera timing and effect blending after
-particle, shadow and clothing passes. The native tests require Windows; the
-rendering test uses D3D11 WARP and `d3dcompiler_47.dll` without game
-assets or a visible window. These checks do not exercise server interaction or
-gameplay.
+particle, shadow and clothing passes. It also checks client-version overrides
+through the production packet sender and an in-process TCP loopback connection.
+The native tests require Windows. The rendering test uses D3D11 WARP and
+`d3dcompiler_47.dll` without game assets or a visible window. These checks do not
+exercise server interaction or gameplay.
 
 The default `ReleaseFast` mode uses `-O2`. Other supported modes are selected with
 `-Doptimize=Debug`, `-Doptimize=ReleaseSafe` or `-Doptimize=ReleaseSmall`.
@@ -74,6 +75,18 @@ $env:SHAIYA_LOGIN_HOST = "127.0.0.1"
 zig build run -Dassets=assets
 ```
 
+`SHAIYA_CLIENT_VERSION` overrides the unsigned 32-bit protocol version sent when
+selecting a game server. Set it to the value required by that server, using
+decimal or `0x`-prefixed hexadecimal. Leading zeros remain decimal unless the
+`0x` prefix is present. Signs, whitespace and dotted versions such as `5.4` are
+not accepted. Missing, empty, invalid, oversized or overflowing values retain
+the recovered default, `0x11122200`. The connection log uses the same value.
+
+```powershell
+$env:SHAIYA_CLIENT_VERSION = "0x11122200"
+zig build run -Dassets=assets
+```
+
 ## Optional mise setup
 
 [`mise.toml`](../mise.toml) pins Zig 0.16.0 and provides two task shortcuts:
@@ -89,6 +102,14 @@ mise run run-client
 with `SHAIYA_LOGIN_HOST=127.0.0.1`, so it builds, stages local assets and connects
 to the login server on localhost. Supply the runtime files in `assets/` and start
 a compatible local server before running it.
+
+Both overrides can be set in a mise task's `env` table. For example:
+
+```toml
+[tasks.run-client]
+env = { SHAIYA_LOGIN_HOST = "127.0.0.1", SHAIYA_CLIENT_VERSION = "0x11122200" }
+run = "zig build run -Dassets=assets"
+```
 
 ## Editor and source documentation
 

@@ -34,8 +34,9 @@ See [build and runtime details](docs/building.md) for requirements, checks and o
   animation timing retains fractional milliseconds at high frame rates.
 - **Login camera:** the introductory pullback uses a stable timeline calibrated
   against the original D3D9 client, so rendering load does not change its speed.
-- **Server selection:** `SHAIYA_LOGIN_HOST` can override the login server's IPv4
-  address for development.
+- **Connection overrides:** `SHAIYA_LOGIN_HOST` selects the login server's IPv4
+  address; `SHAIYA_CLIENT_VERSION` selects the numeric protocol version sent to
+  the server. See the [build guide](docs/building.md) for mise task examples.
 
 This is an ongoing reconstruction. Complete visual and gameplay equivalence
 with the original client has not been established.
