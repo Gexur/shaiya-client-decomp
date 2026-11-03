@@ -70,6 +70,22 @@ $env:SHAIYA_LOGIN_HOST = "127.0.0.1"
 zig build run -Dassets=assets
 ```
 
+## Optional mise setup
+
+[`mise.toml`](../mise.toml) pins Zig 0.16.0 and provides two task shortcuts:
+
+```powershell
+mise trust
+mise install
+mise run build-client
+mise run run-client
+```
+
+`build-client` runs `zig build`. `run-client` runs `zig build run -Dassets=assets`
+with `SHAIYA_LOGIN_HOST=127.0.0.1`, so it builds, stages local assets and connects
+to the login server on localhost. Supply the runtime files in `assets/` and start
+a compatible local server before running it.
+
 ## Editor and source documentation
 
 Open [`shaiya-game-decomp.code-workspace`](../shaiya-game-decomp.code-workspace)

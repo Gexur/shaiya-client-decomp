@@ -1,0 +1,11 @@
+[tools]
+zig = "0.16.0"
+
+[tasks.build-client]
+description = "Build the client with Zig"
+run = "zig build"
+
+[tasks.run-client]
+description = "Build and run the client against localhost"
+env = { SHAIYA_LOGIN_HOST = "127.0.0.1" }
+run = "zig build run -Dassets=assets"

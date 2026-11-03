@@ -21,6 +21,9 @@ DLLs (including `ijl15.dll`) in `assets/`, then run:
 zig build run -Dassets=assets
 ```
 
+Alternatively, [mise](mise.toml) can install Zig and run the client against
+localhost: `mise install`, then `mise run run-client`.
+
 See [build and runtime details](docs/building.md) for requirements, checks and options.
 
 ## Differences from the original client
