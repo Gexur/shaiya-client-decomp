@@ -32,8 +32,8 @@ See [build and runtime details](docs/building.md) for requirements, checks and o
   shaders and rendering passes. Some visual effects may differ.
 - **Background updates:** rendering continues while unfocused or minimized;
   animation timing retains fractional milliseconds at high frame rates.
-- **Login camera:** the introductory pullback uses a stable 60 Hz timeline so
-  changes in rendering load do not change its speed.
+- **Login camera:** the introductory pullback uses a stable timeline calibrated
+  against the original D3D9 client, so rendering load does not change its speed.
 - **Server selection:** `SHAIYA_LOGIN_HOST` can override the login server's IPv4
   address for development.
 

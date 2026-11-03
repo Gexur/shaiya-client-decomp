@@ -40,7 +40,9 @@ alignas(16) unsigned char owner[0x4d88] = {};
 alignas(16) unsigned char second_owner[0x4d88] = {};
 int failure = 0;
 uint32_t checks = 0;
-constexpr float tick_seconds = 1.0f / 60.0f;
+constexpr uint32_t reference_hz = shaiya::graphics::native::login_camera_reference_hz;
+constexpr uint32_t reference_ticks = reference_hz * 20;
+constexpr float tick_seconds = 1.0f / static_cast<float>(reference_hz);
 
 template <typename T> T& field(void* self, uint32_t offset) {
     return *reinterpret_cast<T*>(static_cast<unsigned char*>(self) + offset);
@@ -64,7 +66,7 @@ struct Snapshot {
     float angle;
     uint32_t direction;
 };
-Snapshot reference[1201] = {};
+Snapshot reference[reference_ticks + 1] = {};
 Snapshot snapshot(void* self) {
     Snapshot result;
     for (uint32_t axis = 0; axis < 3; ++axis)
@@ -112,7 +114,7 @@ void frame(float seconds, void* self = owner) {
 void make_reference() {
     initialize();
     reference[0] = snapshot(owner);
-    for (uint32_t tick = 1; tick <= 1200; ++tick) {
+    for (uint32_t tick = 1; tick <= reference_ticks; ++tick) {
         dat_00719a54 = tick_seconds;
         native_login_camera_tick(owner);
         retained_progress(owner, tick_seconds);
@@ -126,9 +128,16 @@ void compare(const Snapshot& expected, int code, float tolerance = .0002f) {
     require(distance(field<float>(owner, 0x49d0), expected.angle) <= .000002f, code);
 }
 void test_reference_and_rates() {
-    // Every virtual reference tick follows the recovered 60 Hz trajectory.
+    // Original D3D9 at 1024x768 reached this reveal threshold at 1.8333s.
+    // Keep the calibrated tempo covered independently of the shared rate.
+    uint32_t reveal_tick = 0;
+    while (reveal_tick < reference_ticks && reference[reveal_tick].eye[2] >= 300)
+        ++reveal_tick;
+    const float reveal_seconds = static_cast<float>(reveal_tick) / reference_hz;
+    require(reveal_seconds > 1.81f && reveal_seconds < 1.86f, 25);
+    // Every virtual reference tick follows the recovered camera trajectory.
     initialize();
-    for (uint32_t tick = 1; tick <= 1200; ++tick) {
+    for (uint32_t tick = 1; tick <= reference_ticks; ++tick) {
         frame(tick_seconds);
         compare(reference[tick], 4);
         for (uint32_t axis = 0; axis < 3; ++axis)
@@ -137,13 +146,13 @@ void test_reference_and_rates() {
                     23);
         require(field<uint32_t>(owner, 0x49cc) == reference[tick].direction, 5);
     }
-    static const uint32_t rates[] = {30, 60, 144, 1000, 4000};
+    static const uint32_t rates[] = {30, 60, 144, reference_hz, 1000, 4000};
     for (uint32_t rate : rates) {
         initialize();
         for (uint32_t second = 1; second <= 20; ++second) {
             for (uint32_t update = 0; update < rate; ++update)
                 frame(1.0f / static_cast<float>(rate));
-            compare(reference[second * 60], 6);
+            compare(reference[second * reference_hz], 6);
         }
     }
 }
@@ -160,21 +169,21 @@ void test_cadence_change_and_hitch() {
             for (uint32_t update = 0; update < subframes; ++update)
                 frame(.001f / static_cast<float>(subframes));
         }
-        compare(reference[second * 60], 7);
+        compare(reference[second * reference_hz], 7);
     }
     require(crossed, 8);
 
     initialize();
-    for (uint32_t tick = 0; tick < 60; ++tick)
+    for (uint32_t tick = 0; tick < reference_hz; ++tick)
         frame(tick_seconds);
     frame(.120f);
     frame(.005f);
-    frame(.125f);
+    frame(.075f);
     frame(0);
-    compare(reference[75], 9); // Full 1.25s elapsed, with no hitch clamping.
+    compare(reference[reference_hz * 6 / 5], 9); // Full 1.2s, with no hitch clamping.
 
     initialize();
-    frame(.001f);
+    frame(tick_seconds * .25f);
     require(eye()[0] != reference[0].eye[0], 10);
     require(distance(eye()[0], reference[0].eye[0]) <
                 distance(reference[1].eye[0], reference[0].eye[0]),
@@ -184,7 +193,7 @@ void test_skip_reset_and_initial_feedback() {
     initialize();
     frame(.1f);
     field<float>(owner, 0x4d78) = 1; // Retained post-camera Escape processing.
-    frame(.0001f);
+    frame(tick_seconds * .125f);
     require(eye()[2] < 256, 12);
     require(field<float>(owner, 0x4d78) == 1, 13);
     frame(0);

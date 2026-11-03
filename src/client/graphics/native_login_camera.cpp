@@ -11,7 +11,8 @@ void __attribute__((thiscall)) native_login_camera_tick(void* self);
 }
 
 namespace {
-constexpr float tick_seconds = 1.0f / 60.0f;
+constexpr float tick_seconds =
+    1.0f / static_cast<float>(shaiya::graphics::native::login_camera_reference_hz);
 constexpr double tick_interval = static_cast<double>(tick_seconds);
 
 struct CameraTick {

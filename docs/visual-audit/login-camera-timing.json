@@ -1,0 +1,68 @@
+{
+  "measured_on": "2026-11-03",
+  "original_executable_sha256": "796af141fd13451bab67ae0bae02d2177b1fe60af51775f296bec7b0eff752da",
+  "localhost_reference_sha256": "7211e3b3492c2c63b7bb4199ce24b13c0ae176d7015ca90ce6d0ca3e79303f12",
+  "original_and_reference_text_sha256": "070ad33f45e266ffe12b324d5852c8fb1b309715b4cc517ec4c59c21f55d36b6",
+  "reference_changes": {
+    "localhost_endpoint_strings": 47,
+    "localhost_changed_bytes": 502,
+    "same_length_window_and_mutex_names": 3,
+    "camera_and_rendering_instructions_changed": false,
+    "process_only_safety_hooks": "Message-box and cursor APIs; no account login or camera/rendering hooks."
+  },
+  "settings": {
+    "width": 1024,
+    "height": 768,
+    "windowed": true,
+    "hidden": true,
+    "gamma": 2,
+    "glow_level": 2,
+    "shadows": false,
+    "water": false
+  },
+  "clock_definition": "Camera elapsed time is owner progress / the recovered 0.001-per-second coefficient, after setup and the initial fade. Executable launch time is excluded.",
+  "original_runs": [
+    {
+      "approach_to_z300_seconds": 1.8333012703806162,
+      "render_fps_before_threshold": 666.9060342910399,
+      "render_fps_after_threshold": 1010.4818845736311,
+      "exit_code": 0
+    },
+    {
+      "approach_to_z300_seconds": 1.718893,
+      "ui_reveal_after_threshold_seconds": 1.50076,
+      "camera_start_to_controls_seconds": 3.2195,
+      "render_fps_before_threshold": 931,
+      "render_fps_after_threshold": 1171,
+      "exit_code": 0
+    }
+  ],
+  "native_policy": {
+    "camera_reference_updates_per_second": 825,
+    "approach_target_seconds": 1.83,
+    "preserved_ui_reveal_seconds": 1.5,
+    "render_frame_rate_capped": false,
+    "original_frame_rate_contract": false,
+    "calibration": "Constant recovered-camera replay at approximately 825 Hz matches the first original run's reveal-threshold time. It preserves that measured tempo while removing render-load-dependent acceleration."
+  },
+  "native_verification": {
+    "launch": "Ordinary process launch, no input, debugger or camera hooks",
+    "executable_sha256": "700a42b4ff374f26a319b54cfed51ebd624aa2fc06656e86aeb7d154a3346611",
+    "samples": 35000,
+    "capture_seconds": 35,
+    "approach_to_z300_seconds": 1.833245,
+    "ui_reveal_after_threshold_seconds": 1.499740,
+    "camera_start_to_controls_seconds": 3.3333,
+    "render_fps_before_threshold": 1161,
+    "render_fps_after_threshold": 7648,
+    "camera_z_velocity_before_threshold": -65.90,
+    "camera_z_velocity_after_threshold": -51.14,
+    "exit_code": 0
+  },
+  "limitations": [
+    "The original camera has no fixed total duration; its per-render feedback makes timing depend on hardware, settings and load.",
+    "These measurements used a hidden 1024x768 window and a concurrent user client/GPU workload. They do not establish a universal intended original duration.",
+    "The two original runs differ by about 6 percent. The fixed reference is a calibrated native policy, not a recovered 825 FPS cap.",
+    "This timing comparison does not establish original/native visual pixel equivalence."
+  ]
+}

@@ -30,12 +30,15 @@ fractional milliseconds and shares elapsed time across scene consumers. Nested
 menu fades refresh that interval on every update, including frames shorter than
 one millisecond.
 
-The floating-island login camera runs its recovered movement at 60 updates per
+The floating-island login camera runs its recovered movement at 825 updates per
 second and interpolates poses for rendering. The original updates part of this
 camera once per rendered frame; disabling intro effects can therefore increase
 its speed abruptly. The fixed camera timeline removes that dependency without
-limiting rendering. The 60 Hz reference is a native timing policy, not a verified
-frame-rate limit in the original D3D9 client.
+limiting rendering. The reference rate is calibrated to a measured original
+D3D9 camera approach of about 1.8 seconds, followed by the recovered 1.5-second
+UI reveal. It is a native timing policy, not an original frame-rate limit.
+See the [timing measurements](../../../docs/visual-audit/login-camera-timing.json)
+for settings, executable hashes and the original client's timing variation.
 
 Shadow, clothing and particle passes preserve the original shared blend-state
 transitions so subsequent weapon effects retain their authored transparency.

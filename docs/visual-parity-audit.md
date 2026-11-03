@@ -155,6 +155,23 @@ black buffers. **No usable paired full-client capture resulted.** Those buffers
 are capture failures, not evidence of black rendering. All owned clients and the
 temporary server were cleaned up.
 
+## Login camera timing follow-up
+
+A later isolated run successfully initialized the original D3D9 client using
+localhost endpoint data and distinct window/mutex names. Its executable code
+section remained byte-identical to the original. Two runs reached the camera's
+Z=300 reveal threshold after 1.72 and 1.83 seconds of camera updates; the next UI
+reveal took 1.50 seconds. These are startup timing measurements, not paired
+pixel-equivalence results.
+
+The original camera advances part of its movement per rendered frame, so there
+is no single authored total duration. The native camera uses a fixed reference
+of 825 updates per second, calibrated to the first measured original approach,
+with interpolation for rendering. This replaces the earlier uncalibrated 60 Hz
+policy, which stretched the approach to about 6.7 seconds. The original UI delay
+is preserved. [Measurement provenance and limitations](visual-audit/login-camera-timing.json)
+include the hidden window, graphics settings and concurrent GPU workload.
+
 ## Recommended verification order
 
 1. Add a backlit reflective-actor case using the original `LIT` rule and the
