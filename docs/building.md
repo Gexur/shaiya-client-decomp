@@ -25,8 +25,10 @@ zig build test
 `check` compiles, links and configures the executable without installing or
 launching it. `test` checks Windows resource serialization, PE compatibility,
 the login fade's animation clock, camera timing and effect blending after
-particle, shadow and clothing passes. It also checks client-version overrides
-through the production packet sender and an in-process TCP loopback connection.
+particle, shadow and clothing passes. It also verifies that dropped-item
+flashes do not tint subsequent NPC and character draws, and checks client-version
+overrides through the production packet sender and an in-process TCP loopback
+connection.
 The native tests require Windows. The rendering test uses D3D11 WARP and
 `d3dcompiler_47.dll` without game assets or a visible window. These checks do not
 exercise server interaction or gameplay.

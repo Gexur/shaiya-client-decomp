@@ -117,6 +117,7 @@ pub fn build(b: *std.Build) void {
         "src/client/graphics/native_shadow_ports.cpp",
         "src/client/graphics/native_procedural_ports.cpp",
         "src/client/graphics/native_effect_ports.cpp",
+        "src/client/graphics/native_actor_ports.cpp",
         "src/client/graphics/native_controller_state.cpp",
         "src/client/graphics/native_render_target.cpp",
         "src/client/core/memory.cpp",

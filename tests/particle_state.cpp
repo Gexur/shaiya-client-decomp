@@ -1,4 +1,4 @@
-// Offscreen D3D11 regression for the shared SEFF -> EFT material state.
+// Offscreen D3D11 regressions for shared effect and actor material state.
 #include "graphics/native_renderer.h"
 #include "graphics/native_scene_ports.h"
 #include <windows.h>
@@ -25,15 +25,18 @@ void clear() {
     fixture_renderer.context->ClearRenderTargetView(fixture_renderer.color_target, background);
 }
 
-void pixel(UINT expected_red, UINT expected_blue, UINT stage) {
+void pixel(UINT expected_red, UINT expected_blue, UINT stage, UINT expected_green = 0) {
     fixture_renderer.context->CopyResource(staging, fixture_renderer.backbuffer);
     D3D11_MAPPED_SUBRESOURCE mapped = {};
     require(SUCCEEDED(fixture_renderer.context->Map(staging, 0, D3D11_MAP_READ, 0, &mapped)), stage);
     const auto* value = static_cast<const unsigned char*>(mapped.pData) + 32 * mapped.RowPitch + 128;
     const int red_error = int(value[2]) - int(expected_red);
+    const int green_error = int(value[1]) - int(expected_green);
     const int blue_error = int(value[0]) - int(expected_blue);
     fixture_renderer.context->Unmap(staging, 0);
-    require(red_error >= -2 && red_error <= 2 && blue_error >= -2 && blue_error <= 2, stage);
+    require(red_error >= -2 && red_error <= 2 && green_error >= -2 && green_error <= 2 &&
+                blue_error >= -2 && blue_error <= 2,
+            stage);
 }
 
 Texture2D* texture(UINT rgba) {
@@ -60,10 +63,107 @@ HRESULT __attribute__((stdcall)) native_effect_world_strip(UINT, const WorldVert
 void __attribute__((stdcall)) native_actor_effect_blend(void*);
 void __attribute__((stdcall)) native_scene_depth_test(UINT);
 void __attribute__((stdcall)) native_scene_blending(UINT);
+void __attribute__((stdcall)) native_scene_lighting(UINT);
+void __attribute__((stdcall)) native_scene_tint(UINT);
+void __attribute__((thiscall)) FUN_00548090(void*, UINT);
+HRESULT __attribute__((thiscall)) FUN_00551960(void*);
+HRESULT __attribute__((thiscall)) FUN_005519c0(void*);
+HRESULT __attribute__((thiscall)) FUN_00556490(void*);
 void __attribute__((thiscall)) FUN_00548880(void*);
 HRESULT __attribute__((thiscall)) FUN_00581b30(void*);
 HRESULT __attribute__((thiscall)) FUN_00581d70(void*, void*);
+extern unsigned char dat_02209408[];
+void __cdecl particle_test_ground_item_complete();
 }
+
+// Execute the exact production completion boundary after each ground-item
+// draw. Calling the existing helper directly would miss a removed caller hook.
+__asm__(".text\n.intel_syntax noprefix\n"
+        ".globl _particle_test_ground_item_complete\n"
+        "_particle_test_ground_item_complete:\n"
+#include "graphics/native_ground_item_complete.inc"
+        "ret\n.att_syntax prefix\n");
+
+namespace {
+void test_ground_item_blink_before_actors() {
+    const ModelVertex model[] = {{{-1, 1, .5f}, {0, 1, 0}, {0, 0}},
+                                 {{1, 1, .5f}, {0, 1, 0}, {1, 0}},
+                                 {{1, -1, .5f}, {0, 1, 0}, {1, 1}},
+                                 {{-1, -1, .5f}, {0, 1, 0}, {0, 1}}};
+    const SkinVertex skin[] = {{{-1, 1, .5f}, 1, {0, 0, 0, 0}, {0, 1, 0}, {0, 0}},
+                               {{1, 1, .5f}, 1, {0, 0, 0, 0}, {0, 1, 0}, {1, 0}},
+                               {{1, -1, .5f}, 1, {0, 0, 0, 0}, {0, 1, 0}, {1, 1}},
+                               {{-1, -1, .5f}, 1, {0, 0, 0, 0}, {0, 1, 0}, {0, 1}}};
+    const uint16_t order[] = {0, 1, 2, 0, 2, 3};
+    Buffer *model_vertices = nullptr, *skin_vertices = nullptr, *indices = nullptr;
+    require(SUCCEEDED(create_buffer(fixture_renderer, BufferKind::vertices, model, sizeof(model),
+                                     sizeof(ModelVertex), DXGI_FORMAT_UNKNOWN, &model_vertices)), 60);
+    require(SUCCEEDED(create_buffer(fixture_renderer, BufferKind::vertices, skin, sizeof(skin),
+                                     sizeof(SkinVertex), DXGI_FORMAT_UNKNOWN, &skin_vertices)), 61);
+    require(SUCCEEDED(create_buffer(fixture_renderer, BufferKind::indices, order, sizeof(order),
+                                     sizeof(uint16_t), DXGI_FORMAT_R16_UINT, &indices)), 62);
+    UINT item[0x10 / 4] = {reinterpret_cast<UINT>(model_vertices), reinterpret_cast<UINT>(indices),
+                          0, 2};
+    UINT npc[0x24 / 4] = {}, skinned[0x24 / 4] = {};
+    npc[1] = skinned[1] = reinterpret_cast<UINT>(indices);
+    npc[0x20 / 4] = skinned[0x20 / 4] = 2;
+    skinned[0] = reinterpret_cast<UINT>(skin_vertices);
+    *reinterpret_cast<Buffer**>(dat_02209408 + 0x358) = model_vertices;
+
+    Scene scene;
+    scene.view = scene.view_projection = identity();
+    scene.ambient = {.8f, .6f, .4f, 1};
+    require(SUCCEEDED(begin_scene(fixture_renderer, scene)), 63);
+    auto& state = scene_draw_context();
+    state.world = identity();
+    state.material = Material();
+    state.material.style = {Blend::opaque, Depth::disabled, Cull::none, Sampling::linear_wrap};
+    state.projected_shadow = false;
+    set_scene_shadow_map(nullptr);
+    auto* white = texture(0xffffffff);
+    set_scene_diffuse(white);
+    native_scene_depth_test(0);
+    native_scene_blending(0);
+    native_scene_lighting(1);
+    FUN_00548090(nullptr, 0);
+    clear();
+    require(SUCCEEDED(FUN_005519c0(npc)), 64);
+    pixel(204, 102, 65, 153); // Baseline lit NPC before any item pulse.
+
+    const AffineBone3x4 bone = {{{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}}};
+    require(SUCCEEDED(set_actor_palette(&bone, 1)), 66);
+    static const UINT pulses[] = {77, 166, 255, 77};
+    for (UINT pulse : pulses) {
+        // Recovered 428470 draws the item unlit using an opaque grayscale
+        // texture factor, then restores lighting and stage-0 diffuse color.
+        native_scene_lighting(0);
+        native_scene_tint(0xff000000 | pulse << 16 | pulse << 8 | pulse);
+        clear();
+        require(SUCCEEDED(FUN_00556490(item)), 67);
+        pixel(pulse, pulse, 68, pulse); // The item must continue blinking.
+        particle_test_ground_item_complete();
+        require(state.lit, 69);
+
+        FUN_00548090(nullptr, 0);
+        clear();
+        require(SUCCEEDED(FUN_005519c0(npc)), 70);
+        pixel(204, 102, 71, 153);
+        clear();
+        require(SUCCEEDED(FUN_00556490(item)), 72); // Same static path, now lit.
+        pixel(204, 102, 73, 153);
+        FUN_00548090(nullptr, 1);
+        clear();
+        require(SUCCEEDED(FUN_00551960(skinned)), 74);
+        pixel(204, 102, 75, 153);
+    }
+    set_scene_diffuse(nullptr);
+    white->release();
+    *reinterpret_cast<Buffer**>(dat_02209408 + 0x358) = nullptr;
+    model_vertices->release();
+    skin_vertices->release();
+    indices->release();
+}
+} // namespace
 
 extern "C" void particle_state_test_entry() {
     // WARP exercises the production GPU shaders without opening a window or
@@ -168,11 +268,13 @@ extern "C" void particle_state_test_entry() {
         native_scene_depth_test(1);
         require(state.material.style.depth == (boundary == 0 ? Depth::write : Depth::read), 55);
     }
+    test_ground_item_blink_before_actors();
     set_scene_diffuse(nullptr);
     set_scene_shadow_map(nullptr);
     blue->release();
     vertices->release();
-    const char message[] = "Effect state: particle, shadow and cape transitions to EFT alpha pixels passed.\n";
+    const char message[] =
+        "Effect state: particle/cape/shadow alpha and ground-item to actor colors passed.\n";
     DWORD written;
     WriteFile(GetStdHandle(STD_OUTPUT_HANDLE), message, sizeof(message) - 1, &written, nullptr);
     ExitProcess(0);
@@ -195,7 +297,6 @@ void __attribute__((thiscall)) FUN_00559890(void*) { ExitProcess(90); }
 void __attribute__((thiscall)) FUN_0053dc20(void*) { ExitProcess(90); }
 void __attribute__((thiscall)) FUN_0055b1f0(void*) { ExitProcess(90); }
 void __attribute__((thiscall)) FUN_0055b650(void*) { ExitProcess(90); }
-HRESULT __attribute__((thiscall)) FUN_00556490(void*) { ExitProcess(90); }
 void __attribute__((thiscall)) FUN_00541bb0(void*, int) { ExitProcess(90); }
 unsigned long long __cdecl x87_to_integer_005cd414(long double) { ExitProcess(90); }
 }
