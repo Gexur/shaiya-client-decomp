@@ -1,0 +1,54 @@
+#pragma once
+#include <stdint.h>
+extern "C" {
+uint32_t __attribute__((thiscall)) FUN_005f699e(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f69bf(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f69e0(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f6d1c(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f6d3d(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f6d5e(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f6d7f(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f6da0(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f6dc1(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f6de2(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f6e03(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f713d(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f715e(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f717f(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f71a0(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f71c1(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f71e2(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7203(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f75d0(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f75f1(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7612(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7633(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7675(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7696(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f76b7(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f794f(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7970(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7991(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7dce(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7654(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7def(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f79b2(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7e10(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7e31(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7e52(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7e73(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7e94(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f7eb5(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f79d3(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005fb3a1(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005fb3be(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005fb367(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005fb3db(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005fb3f8(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005fb415(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f82ae(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005f82cf(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005fb34a(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005fb384(void* object, void* descriptor);
+uint32_t __attribute__((thiscall)) FUN_005fb32d(void* object, void* descriptor);
+}

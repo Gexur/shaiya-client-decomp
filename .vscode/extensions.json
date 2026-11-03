@@ -1,0 +1,6 @@
+{
+  "recommendations": [
+    "ziglang.vscode-zig",
+    "llvm-vs-code-extensions.vscode-clangd"
+  ]
+}

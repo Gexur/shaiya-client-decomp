@@ -1,0 +1,51 @@
+# Build output and caches
+/.zig-cache/
+/zig-cache/
+/zig-out/
+/build/
+/dist/
+.cache/
+
+# Compiled binaries and intermediate files
+*.o
+*.obj
+*.a
+*.lib
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.idb
+*.exp
+*.res
+*.bc
+
+# Local game data and runtime files; keep the empty directory in Git
+/assets/*
+!/assets/.gitkeep
+*.saf
+*.sah
+
+# Embedded .bin, .ico and .cur files in src/client/resources are build inputs.
+# Keep those files, their manifest and the import definitions in version control.
+
+# Local tooling and generated compiler metadata
+/.tools/
+/.venv/
+/compile_commands.json
+__pycache__/
+*.pyc
+
+# Logs, temporary files and editor-local state
+*.log
+*.tmp
+*.temp
+*.bak
+*~
+*.swp
+*.swo
+/.vs/
+/.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini

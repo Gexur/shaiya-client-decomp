@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "description": "Editable Windows resources linked into the source-built client. Each row is one type/ID/language identity, not a PE section.",
+  "reference_executable_sha256": "796af141fd13451bab67ae0bae02d2177b1fe60af51775f296bec7b0eff752da",
+  "migration_source_manifest_sha256": "14e4aa9f3d41b7f87acf623d85061fd0d971131b40e51955a1f7946e41cd7551",
+  "resources": [
+    {
+      "type": 1,
+      "id": 1,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "cursor_1_lang_1042.cur",
+      "format": "cursor",
+      "reference_payload_sha256": "1cc657e22a250060356c25e646f88d751e585470e7f388594e1ca5e9d098f9ea"
+    },
+    {
+      "type": 1,
+      "id": 2,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "cursor_2_lang_1042.cur",
+      "format": "cursor",
+      "reference_payload_sha256": "47e3ef66c03927ce70832eb3176e556c364dfd94d0f3323013f1fe1e0d6bcf17"
+    },
+    {
+      "type": 1,
+      "id": 3,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "cursor_3_lang_1042.cur",
+      "format": "cursor",
+      "reference_payload_sha256": "c353357cd509337228aae9a9bf2eda9c46304faa34f174a73a4a15dbb3981b47"
+    },
+    {
+      "type": 1,
+      "id": 4,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "cursor_4_lang_1042.cur",
+      "format": "cursor",
+      "reference_payload_sha256": "bdbf503cc3af1197a7eab8a3f065526f4ceb9c8ec347880112d523b2bd681e83"
+    },
+    {
+      "type": 1,
+      "id": 5,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "cursor_5_lang_1042.cur",
+      "format": "cursor",
+      "reference_payload_sha256": "3f6a4e8a1da66dea5317903a474611ad86cbfe9903a15a5b14b59c811ccb52a4"
+    },
+    {
+      "type": 1,
+      "id": 6,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "cursor_6_lang_1042.cur",
+      "format": "cursor",
+      "reference_payload_sha256": "1d78e6a3f7fe2db0543282e442f78dd634a0589af319639906936e1eb67ebc09"
+    },
+    {
+      "type": 1,
+      "id": 7,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "cursor_7_lang_1042.cur",
+      "format": "cursor",
+      "reference_payload_sha256": "f4ff5cdc13df2d77e849f0be7ed89177fe8e1636a276c86f82eb342252ab63cd"
+    },
+    {
+      "type": 3,
+      "id": 8,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "icon_8_lang_1042.ico",
+      "format": "icon",
+      "reference_payload_sha256": "e4548eb4ebf6bb07ad0dbb78465357100d10e3269776a9967e9c6a5ec45a3034"
+    },
+    {
+      "type": 3,
+      "id": 9,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "icon_9_lang_1042.ico",
+      "format": "icon",
+      "reference_payload_sha256": "4ca276299ef380c2eacc319d3233625ed6395efab57471643f6d842cafdc3611"
+    },
+    {
+      "type": 3,
+      "id": 10,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "icon_10_lang_1042.ico",
+      "format": "icon",
+      "reference_payload_sha256": "738514c3e4cded8476429d5ee7069a9413c22edb94fffab10434cbe4c22c6ab2"
+    },
+    {
+      "type": 3,
+      "id": 11,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "icon_11_lang_1042.ico",
+      "format": "icon",
+      "reference_payload_sha256": "c32f34489d34c1035a5b9b5af491558ba6e87c2bc1b7c348635f61fd7578df2f"
+    },
+    {
+      "type": 3,
+      "id": 12,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "icon_12_lang_1042.ico",
+      "format": "icon",
+      "reference_payload_sha256": "a1729d018b70eec3023f670a5c4bad8c579227df1f2d65025636fd5e03bff625"
+    },
+    {
+      "type": 3,
+      "id": 13,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "icon_13_lang_1042.ico",
+      "format": "icon",
+      "reference_payload_sha256": "0c7183d31c60c88ff122f7a2795480afcdb0a35141fd838fb50864c930183e15"
+    },
+    {
+      "type": 12,
+      "id": 174,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "group_cursor_174_lang_1042.bin",
+      "format": "binary",
+      "reference_payload_sha256": "a88d44336854a07118fbdca99db3e96e7af78776dc1c88c35cefe0cba2afcee3"
+    },
+    {
+      "type": 12,
+      "id": 175,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "group_cursor_175_lang_1042.bin",
+      "format": "binary",
+      "reference_payload_sha256": "264fbfa9c393686bc0b9dbc3e7bc2d903a13cd5fb294fd6d26061b6520d8761c"
+    },
+    {
+      "type": 12,
+      "id": 176,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "group_cursor_176_lang_1042.bin",
+      "format": "binary",
+      "reference_payload_sha256": "acf8ca6eb49ab6ef7f15ca05159938f5439baaceb4f62b28a59bbdb2d0035e25"
+    },
+    {
+      "type": 12,
+      "id": 177,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "group_cursor_177_lang_1042.bin",
+      "format": "binary",
+      "reference_payload_sha256": "a7207b14e868ce5fe75588f78bd79767d437a0acec53d953acac57b5a6848a09"
+    },
+    {
+      "type": 12,
+      "id": 178,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "group_cursor_178_lang_1042.bin",
+      "format": "binary",
+      "reference_payload_sha256": "66505eb44699246a25c6f8a10422041db62335a438679d80e55090733e11616f"
+    },
+    {
+      "type": 12,
+      "id": 179,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "group_cursor_179_lang_1042.bin",
+      "format": "binary",
+      "reference_payload_sha256": "735c1308669c10f83cfe17939ac8b38990a18f93c4fe4c5e3d984b15ad349621"
+    },
+    {
+      "type": 12,
+      "id": 180,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "group_cursor_180_lang_1042.bin",
+      "format": "binary",
+      "reference_payload_sha256": "0e6aee6e6c9f0b8c5b7c9f6a0a1db5beed6bac2fcb0226fac7a5e1b1d2175189"
+    },
+    {
+      "type": 14,
+      "id": 185,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "group_icon_185_lang_1042.bin",
+      "format": "binary",
+      "reference_payload_sha256": "4c46d3d8aed2dca6d2aa18de568f9ef771438d9b753b7580b1a152580da1e7b8"
+    },
+    {
+      "type": 16,
+      "id": 1,
+      "language": 1042,
+      "codepage": 0,
+      "asset": "version_1_lang_1042.bin",
+      "format": "binary",
+      "reference_payload_sha256": "33c999ea84fcbc685a4ad8af8b46f8c72f3a49916d5f9c1c65e63e704cda38f1"
+    }
+  ]
+}

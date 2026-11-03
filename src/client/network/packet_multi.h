@@ -1,0 +1,56 @@
+#pragma once
+#include "network/packets.h"
+
+extern "C" {
+void PACKET_CDECL fun_0058e280(PacketReader*);
+void PACKET_CDECL fun_0058eca0(PacketReader*);
+void PACKET_CDECL fun_0058eda0(PacketReader*);
+void PACKET_CDECL fun_0058ee30(PacketReader*);
+void PACKET_CDECL fun_0058ef60(PacketReader*);
+void PACKET_CDECL fun_0058f0d0(PacketReader*);
+void PACKET_CDECL fun_0058f260(PacketReader*);
+void PACKET_CDECL fun_0058f320(PacketReader*);
+void PACKET_CDECL fun_0058f640(PacketReader*);
+void PACKET_CDECL fun_0058f6d0(PacketReader*);
+void PACKET_CDECL fun_0058f7c0(PacketReader*);
+void PACKET_CDECL fun_0058fb50(PacketReader*);
+void PACKET_CDECL fun_0058fbc0(PacketReader*);
+void PACKET_CDECL fun_0058fc50(PacketReader*);
+void PACKET_CDECL fun_0058fe10(PacketReader*);
+void PACKET_CDECL fun_0058fea0(PacketReader*);
+void PACKET_CDECL fun_0058ff10(PacketReader*);
+void PACKET_CDECL fun_00590120(PacketReader*);
+void PACKET_CDECL fun_005901e0(PacketReader*);
+void PACKET_CDECL fun_00590280(PacketReader*);
+void PACKET_CDECL fun_00590300(PacketReader*);
+void PACKET_CDECL fun_00590370(PacketReader*);
+void PACKET_CDECL fun_00590520(PacketReader*);
+void PACKET_CDECL fun_005905e0(PacketReader*);
+void PACKET_CDECL fun_00590680(PacketReader*);
+void PACKET_CDECL fun_00590970(PacketReader*);
+void PACKET_CDECL fun_00590a30(PacketReader*);
+void PACKET_CDECL fun_00590ad0(PacketReader*);
+void PACKET_CDECL fun_00590b50(PacketReader*);
+void PACKET_CDECL fun_00590c00(PacketReader*);
+void PACKET_CDECL fun_00590ca0(PacketReader*);
+void PACKET_CDECL fun_00590df0(PacketReader*);
+void PACKET_CDECL fun_00590ef0(PacketReader*);
+void PACKET_CDECL fun_00590f90(PacketReader*);
+void PACKET_CDECL fun_00592f50(PacketReader*);
+void PACKET_CDECL fun_00593020(PacketReader*);
+void PACKET_CDECL fun_005930d0(PacketReader*);
+void PACKET_CDECL fun_00593140(PacketReader*);
+void PACKET_CDECL fun_00593c40(PacketReader*);
+void PACKET_CDECL fun_00593cb0(PacketReader*);
+void PACKET_CDECL fun_00593d30(PacketReader*);
+void PACKET_CDECL fun_00593db0(PacketReader*);
+void PACKET_CDECL fun_00593fd0(PacketReader*);
+void PACKET_CDECL fun_00594050(PacketReader*);
+void PACKET_CDECL fun_005940d0(PacketReader*);
+void PACKET_CDECL fun_00595840(PacketReader*);
+void PACKET_CDECL fun_00596150(PacketReader*);
+void PACKET_CDECL fun_00596380(PacketReader*);
+void PACKET_CDECL fun_00596490(PacketReader*);
+void PACKET_CDECL fun_00596fd0(PacketReader*);
+void PACKET_CDECL fun_00597940(PacketReader*);
+}

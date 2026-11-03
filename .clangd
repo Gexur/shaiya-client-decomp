@@ -1,0 +1,16 @@
+# Optional clangd fallback flags. Zig supplies the actual Windows headers during
+# builds; an editor may supply its own target-aware compilation database.
+CompileFlags:
+  Add: [-std=c++17, -ffreestanding, -fno-builtin, -fno-rtti]
+---
+If:
+  PathMatch: src/client/.*_instructions.*\.cpp
+Index:
+  Background: Skip
+---
+If:
+  PathMatch: (\.zig-cache|zig-out|assets)/.*
+Index:
+  Background: Skip
+Diagnostics:
+  Suppress: '*'

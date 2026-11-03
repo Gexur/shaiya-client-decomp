@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build client",
+      "type": "process",
+      "command": "zig",
+      "args": ["build"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "Check client",
+      "type": "process",
+      "command": "zig",
+      "args": ["build", "check"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": "test",
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "Test build support",
+      "type": "process",
+      "command": "zig",
+      "args": ["build", "test"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": "test",
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "Run client with local assets",
+      "type": "process",
+      "command": "zig",
+      "args": ["build", "run", "-Dassets=assets"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": "$gcc"
+    }
+  ]
+}

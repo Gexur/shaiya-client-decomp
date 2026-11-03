@@ -1,0 +1,4 @@
+// Three original read-only XOR masks at6f38c0/6f38d0/6f38e0.
+extern "C" alignas(16) const uint32_t dat_006f38c0[12] = {
+    0x80000000, 0x0,        0x0, 0x80000000, 0x0, 0x0,
+    0x80000000, 0x80000000, 0x0, 0x80000000, 0x0, 0x80000000};

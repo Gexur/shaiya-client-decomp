@@ -1,0 +1,53 @@
+#pragma once
+#include <stdint.h>
+extern "C" {
+void* __attribute__((stdcall)) FUN_006801e3(void*, float, float, float);
+void* __attribute__((stdcall)) FUN_00683ee0(void*, float, float, float);
+uint64_t __attribute__((stdcall)) FUN_006a6410(const void*, void*, void*);
+uint64_t __attribute__((stdcall)) FUN_006a65fc(const void*, void*, void*);
+extern const uint32_t dat_006bb5fc[1];
+extern const uint32_t dat_006f38f0[4];
+extern const uint32_t dat_006f3900[4];
+extern const uint32_t dat_006f3980[4];
+extern const uint32_t dat_006f3990[4];
+extern uint32_t dat_00717af0[4];
+extern uint32_t dat_00717b00[4];
+extern uint32_t dat_00717b10[4];
+extern uint32_t dat_00717b20[4];
+extern uint32_t dat_00717b30[4];
+extern uint32_t dat_00717b40[4];
+extern uint32_t dat_00717b50[4];
+extern uint32_t dat_00717b60[1];
+extern uint32_t dat_00717b70[4];
+extern uint32_t dat_00717b80[4];
+extern uint32_t dat_00717b90[4];
+extern uint32_t dat_00717ba0[4];
+extern uint32_t dat_00717bb0[4];
+extern uint32_t dat_00717bc0[4];
+extern uint32_t dat_00717bd0[4];
+extern uint32_t dat_00717be0[4];
+extern uint32_t dat_00717bf0[4];
+extern uint32_t dat_00717c00[4];
+extern uint32_t dat_00717c10[4];
+extern uint32_t dat_00717c20[4];
+extern uint32_t dat_00717c30[4];
+extern uint32_t dat_00717c40[4];
+extern uint32_t dat_00717c50[4];
+extern uint32_t dat_00717c60[4];
+extern uint32_t dat_00717c70[4];
+extern uint32_t dat_00717c80[4];
+extern uint32_t dat_00717c90[4];
+extern uint32_t dat_00717ca0[4];
+extern uint32_t dat_00717cb0[4];
+extern uint32_t dat_00717cc0[4];
+extern uint32_t dat_00717cd0[4];
+extern uint32_t dat_00717ce0[4];
+extern uint32_t dat_00717cf0[4];
+extern uint32_t dat_00717d00[4];
+extern uint32_t dat_00717d10[4];
+extern uint32_t dat_00717d20[4];
+extern uint32_t dat_00717d30[4];
+extern uint32_t dat_00717d40[4];
+extern uint32_t dat_00717d50[4];
+extern uint32_t dat_00717d60[4];
+}

@@ -1,0 +1,13 @@
+{
+  "files.associations": { "*.inc": "cpp" },
+  "files.watcherExclude": {
+    "**/.zig-cache/**": true,
+    "**/zig-out/**": true,
+    "**/assets/**": true
+  },
+  "search.exclude": {
+    "**/.zig-cache/**": true,
+    "**/zig-out/**": true,
+    "**/assets/**": true
+  }
+}

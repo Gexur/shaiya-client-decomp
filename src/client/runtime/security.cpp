@@ -1,0 +1,20 @@
+#include "runtime/security.h"
+// Original check preserves live EAX/EDX and all other registers.
+// Both the successful RET and the genuine reporter tail transfer are retained.
+__asm__(".text\n"
+        ".intel_syntax noprefix\n"
+        ".globl \"@fun_005d0efa@4\"\n"
+        "\"@fun_005d0efa@4\":\n"
+        ".globl _startup_dependency_location_005d0efa\n"
+        "_startup_dependency_location_005d0efa:\n"
+        "cmp ecx, dword ptr [_dat_0070e4ec]\n"
+        ".globl _startup_dependency_location_005d0f00\n"
+        "_startup_dependency_location_005d0f00:\n"
+        "jne _startup_dependency_location_005d0f03\n"
+        ".globl _startup_dependency_location_005d0f02\n"
+        "_startup_dependency_location_005d0f02:\n"
+        "ret\n"
+        ".globl _startup_dependency_location_005d0f03\n"
+        "_startup_dependency_location_005d0f03:\n"
+        "jmp _fun_005d0ec9\n"
+        ".att_syntax prefix\n");

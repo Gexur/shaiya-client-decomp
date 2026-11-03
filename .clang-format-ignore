@@ -1,0 +1,2 @@
+# Generated x86 instruction listings are retained verbatim as ABI evidence.
+src/client/**/*_instructions*.cpp
