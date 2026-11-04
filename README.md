@@ -3,6 +3,15 @@
 An AI-assisted reverse-engineered C++ client for Shaiya Episode 5.4. The project
 combines recovered C++, x86 instruction transcriptions and newly authored code.
 
+## Contributions and scope
+
+We only accept contributions that refactor existing code, such as improving
+names, simplifying logic or making recovered code easier to understand.
+Refactors must preserve existing client behavior.
+
+Implementing new features in the game is a non-goal of this project.
+Contributions that add game features will not be accepted.
+
 ## Build
 
 Install Zig 0.16.0, put `zig` on your `PATH`, and run from this directory:
