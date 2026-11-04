@@ -124,6 +124,17 @@ pub fn build(b: *std.Build) void {
         "src/client/core/stack_probe.cpp",
     }, &.{ "d3d11", "dxgi", "kernel32", "user32", "gdi32", "ole32" });
     test_step.dependOn(&b.addRunArtifact(particle_tests).step);
+
+    const cooldown_tests = clientTest(b, target, "cooldown-overlay-test", "cooldown_overlay_test_entry", &.{
+        "tests/cooldown_overlay.cpp",
+        "src/client/graphics/native_ui_calls.cpp",
+        "src/client/graphics/native_render_passes.cpp",
+        "src/client/core/memory.cpp",
+        "src/client/core/stack_probe.cpp",
+    }, &.{ "d3d11", "kernel32", "user32" });
+    const run_cooldown_tests = b.addRunArtifact(cooldown_tests);
+    test_step.dependOn(&run_cooldown_tests.step);
+    b.step("test-cooldown", "Test native radial cooldown overlays offscreen").dependOn(&run_cooldown_tests.step);
 }
 
 fn clientTest(b: *std.Build, target: std.Build.ResolvedTarget, name: []const u8, entry: []const u8, sources: []const []const u8, libraries: []const []const u8) *std.Build.Step.Compile {

@@ -33,6 +33,11 @@ The native tests require Windows. The rendering test uses D3D11 WARP and
 `d3dcompiler_47.dll` without game assets or a visible window. These checks do not
 exercise server interaction or gameplay.
 
+`zig build test-cooldown` runs the radial cooldown regression alone; it also
+runs as part of `test`. It checks D3D11 pixels for both icon sizes, full and
+partial overlays, original opacity, unused texture coordinates and texture
+selection before the next icon draw.
+
 The default `ReleaseFast` mode uses `-O2`. Other supported modes are selected with
 `-Doptimize=Debug`, `-Doptimize=ReleaseSafe` or `-Doptimize=ReleaseSmall`.
 The recovered pointer layouts and calling conventions require the
