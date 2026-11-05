@@ -26,31 +26,11 @@ float clip_plane[4] = {};
 bool clip_enabled = false;
 struct PortraitState {
     SceneDrawScope draw;
-    Color light_color = directional_color;
-    bool light_enabled = directional_enabled;
-    bool saved_depth_test = depth_test, saved_depth_write = depth_write;
-    bool saved_blending = blending, saved_alpha_test = alpha_test;
-    Blend saved_blend = blend;
-    D3D11_BLEND source = authored_source, destination = authored_destination;
-    float saved_alpha_cutoff = alpha_cutoff;
-    float plane[4] = {clip_plane[0], clip_plane[1], clip_plane[2], clip_plane[3]};
-    bool saved_clip_enabled = clip_enabled;
+    ControllerState controller = capture_controller_state();
 };
 void restore_portrait(void* saved) {
     auto* state = static_cast<PortraitState*>(saved);
-    directional_color = state->light_color;
-    directional_enabled = state->light_enabled;
-    depth_test = state->saved_depth_test;
-    depth_write = state->saved_depth_write;
-    blending = state->saved_blending;
-    alpha_test = state->saved_alpha_test;
-    blend = state->saved_blend;
-    authored_source = state->source;
-    authored_destination = state->destination;
-    alpha_cutoff = state->saved_alpha_cutoff;
-    for (UINT i = 0; i < 4; ++i)
-        clip_plane[i] = state->plane[i];
-    clip_enabled = state->saved_clip_enabled;
+    restore_controller_state(state->controller);
     state->~PortraitState();
     HeapFree(GetProcessHeap(), 0, state);
 }
@@ -85,6 +65,39 @@ UINT channel(float value) {
     return value <= 0 ? 0 : value >= 1 ? 255 : static_cast<UINT>(value * 255 + 0.5f);
 }
 } // namespace
+namespace shaiya::graphics::native {
+ControllerState capture_controller_state() {
+    return {directional_color,
+            directional_enabled,
+            depth_test,
+            depth_write,
+            blending,
+            alpha_test,
+            blend,
+            authored_source,
+            authored_destination,
+            alpha_cutoff,
+            {clip_plane[0], clip_plane[1], clip_plane[2], clip_plane[3]},
+            clip_enabled};
+}
+// Restores the flags only; the caller's SceneDrawScope restores the draw style
+// they were last combined into.
+void restore_controller_state(const ControllerState& state) {
+    directional_color = state.light_color;
+    directional_enabled = state.light_enabled;
+    depth_test = state.depth_test;
+    depth_write = state.depth_write;
+    blending = state.blending;
+    alpha_test = state.alpha_test;
+    blend = state.blend;
+    authored_source = state.source;
+    authored_destination = state.destination;
+    alpha_cutoff = state.alpha_cutoff;
+    for (UINT i = 0; i < 4; ++i)
+        clip_plane[i] = state.plane[i];
+    clip_enabled = state.clip_enabled;
+}
+} // namespace shaiya::graphics::native
 extern "C" HRESULT __attribute__((stdcall)) native_portrait_preserve_state(TargetScope* target) {
     if (target == nullptr || !target->active || target->restore_draw_state != nullptr)
         return E_INVALIDARG;

@@ -52,4 +52,29 @@ struct SceneDrawScope {
     SceneDrawScope(const SceneDrawScope&) = delete;
     SceneDrawScope& operator=(const SceneDrawScope&) = delete;
 };
+// Engine render-state flags (depth, blending, alpha test, clip plane and the
+// directional light switch) that later SetRenderState-style calls combine into
+// the current draw style. Nested world renders change them; scopes that run one
+// restore them together with the draw context.
+struct ControllerState {
+    Color light_color;
+    bool light_enabled;
+    bool depth_test, depth_write, blending, alpha_test;
+    Blend blend;
+    D3D11_BLEND source, destination;
+    float alpha_cutoff;
+    float plane[4];
+    bool clip_enabled;
+};
+ControllerState capture_controller_state();
+void restore_controller_state(const ControllerState& state);
+struct ControllerStateScope {
+    ControllerState saved = capture_controller_state();
+    ControllerStateScope() = default;
+    ~ControllerStateScope() {
+        restore_controller_state(saved);
+    }
+    ControllerStateScope(const ControllerStateScope&) = delete;
+    ControllerStateScope& operator=(const ControllerStateScope&) = delete;
+};
 } // namespace shaiya::graphics::native

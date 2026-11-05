@@ -40,6 +40,11 @@ UI reveal. It is a native timing policy, not an original frame-rate limit.
 See the [timing measurements](../../../docs/visual-audit/login-camera-timing.json)
 for settings, executable hashes and the original client's timing variation.
 
+Water reflection and refraction captures re-enter the world render, including
+its UI branch that disables depth testing. The water pass restores the engine's
+depth, blending, alpha-test and clip flags afterwards, so grass and other
+depth-read draws that follow it stay occluded by terrain and objects.
+
 Shadow, clothing and particle passes preserve the original shared blend-state
 transitions so subsequent weapon effects retain their authored transparency.
 
