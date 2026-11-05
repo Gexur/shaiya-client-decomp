@@ -91,6 +91,10 @@ extern "C" HRESULT __attribute__((thiscall)) FUN_005403b0(void* owner) {
     if (!geometry || !reflected)
         return E_POINTER;
     auto& current = *renderer();
+    // The reflection and refraction captures re-enter the whole world render,
+    // whose UI branch leaves depth testing disabled. Later passes that combine
+    // these flags (grass draws with depth writes off) must see the caller's.
+    ControllerStateScope controller_scope;
     SceneDrawScope material_scope;
     SceneRestore scene_scope(current);
     FUN_0053ded0(owner);
