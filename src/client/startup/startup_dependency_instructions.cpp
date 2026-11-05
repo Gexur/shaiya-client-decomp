@@ -506435,10 +506435,12 @@ __asm__(
 "call _FUN_005cd414\n"
 ".globl _startup_dependency_location_004b8062\n"
 "_startup_dependency_location_004b8062:\n"
-"mov edx, dword ptr [_DAT_007085a0]\n"
+// Native layout: tips sit under the loading bar frame (bar y + 88),
+// between its hanging chains, instead of at 95% of the screen height.
+"mov edx, dword ptr [esi + 0x65ec]\n"
 ".globl _startup_dependency_location_004b8068\n"
 "_startup_dependency_location_004b8068:\n"
-"add edx, -0xd\n"
+"add edx, 88\n"
 ".globl _startup_dependency_location_004b806b\n"
 "_startup_dependency_location_004b806b:\n"
 "mov dword ptr [esp + 0xc], edx\n"
@@ -506450,7 +506452,6 @@ __asm__(
 "mov edi, eax\n"
 ".globl _startup_dependency_location_004b8075\n"
 "_startup_dependency_location_004b8075:\n"
-"fmul dword ptr [_dat_006be938]\n"
 ".globl _startup_dependency_location_004b807b\n"
 "_startup_dependency_location_004b807b:\n"
 "call _FUN_005cd414\n"
