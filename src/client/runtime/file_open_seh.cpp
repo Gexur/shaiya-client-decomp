@@ -85,7 +85,7 @@ extern "C" int32_t fun_005cda16(const char* path, uint32_t flags, uint32_t permi
     int32_t locked = 0, descriptor;
     int32_t result;
     __try {
-        result = fun_005cd72f(&locked, &descriptor, path, flags, permissions, 0x40);
+        result = open_file_descriptor(&locked, &descriptor, path, flags, permissions, 0x40);
     } __finally {
         if (locked)
             fun_005cda5b(locked, descriptor);

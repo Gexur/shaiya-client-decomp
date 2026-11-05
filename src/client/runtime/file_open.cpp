@@ -86,8 +86,25 @@ extern "C" int32_t fun_005d5e97(int32_t descriptor, int32_t size) {
     return result;
 }
 
-extern "C" int32_t fun_005cd72f(int32_t* locked, int32_t* output_descriptor, const char* path,
-                                uint32_t flags, uint32_t permissions, uint32_t sharing) {
+// The recovered _sopen (5cda6b) passes sharing in ECX and pops five operands.
+// Reading a sixth stack operand instead made every fopen fail with EINVAL
+// before CreateFileA (for example notice.txt and tip.txt).
+extern "C" __attribute__((naked)) int32_t fun_005cd72f(int32_t*, int32_t*, const char*, uint32_t,
+                                                       uint32_t) {
+    __asm__ volatile("pushl %ecx\n\t"
+                     "pushl 24(%esp)\n\t"
+                     "pushl 24(%esp)\n\t"
+                     "pushl 24(%esp)\n\t"
+                     "pushl 24(%esp)\n\t"
+                     "pushl 24(%esp)\n\t"
+                     "calll _open_file_descriptor\n\t"
+                     "addl $24,%esp\n\t"
+                     "retl");
+}
+
+extern "C" int32_t open_file_descriptor(int32_t* locked, int32_t* output_descriptor,
+                                        const char* path, uint32_t flags, uint32_t permissions,
+                                        uint32_t sharing) {
     OriginalSecurityAttributes security = {12, nullptr, int8_t(flags) >= 0 ? 1 : 0};
     uint8_t internal = int8_t(flags) >= 0 ? 0 : 0x10;
     if (!(flags & 0x8000u) && ((flags & 0x4000u) || dat_0224ee74 != 0x8000u))
