@@ -1454,8 +1454,11 @@ float dat_00709e5c = 0x1.c000000000000p+5f;
 float dat_00709e60 = 0x1.1e00000000000p+7f;
 float dat_00709e74 = 0x1.5800000000000p+5f;
 float dat_00709e78 = 0x1.4000000000000p+4f;
-float dat_00709ea0 = 0x1.ec00000000000p+6f;
-float dat_00709ea4 = 0x1.ca00000000000p+8f;
+// Announcement "do not show again" check button, relative to its window.
+// The recovered (123, 458) drew the mark over the label text; (28, 467)
+// centres it in the check box drawn by the window art.
+float dat_00709ea0 = 0x1.c000000000000p+4f;
+float dat_00709ea4 = 0x1.d300000000000p+8f;
 float dat_00709ea8 = 0x1.3000000000000p+8f;
 float dat_00709eac = 0x1.0000000000000p+0f;
 float dat_00709eb0 = 0x1.3100000000000p+8f;
