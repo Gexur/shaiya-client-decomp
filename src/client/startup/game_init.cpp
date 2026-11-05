@@ -43,6 +43,8 @@ uint32_t __attribute__((thiscall)) FUN_0053b990(void*, uint32_t, uint32_t, const
                                                 uint32_t);
 void* __attribute__((thiscall)) FUN_0053e530(void*);
 void* __attribute__((thiscall)) FUN_0054e330(void*);
+void __attribute__((thiscall)) FUN_0054e490(void*, uint32_t);
+void __attribute__((thiscall)) FUN_005414f0(void*, float);
 void __cdecl FUN_0040a5d0();
 const char* __cdecl FUN_0041d4a0(uint32_t);
 const wchar_t* __cdecl FUN_0054bd80(const char*);
@@ -186,6 +188,15 @@ extern "C" int32_t __cdecl FUN_0040b2d0() {
     dat_0071931c = allocated != nullptr ? FUN_0053e530(allocated) : nullptr;
     allocated = FUN_005cc96d(0x94);
     dat_00719318 = allocated != nullptr ? FUN_0054e330(allocated) : nullptr;
+    // The glow owner starts at level 2 and the options window only pushes a
+    // setting when its slider changes, so scenes shown before any change
+    // (server and character selection) used that default. Apply the saved
+    // video options the way the options Cancel path (0x004fd879) does.
+    if (dat_00719318 != nullptr)
+        FUN_0054e490(dat_00719318, shaiya::config::DAT_007198e0);
+    shaiya::config::apply_view_range_preset(int32_t(shaiya::config::DAT_007198e4));
+    FUN_005414f0(dat_02209408,
+                 1.0f + float(int32_t(shaiya::config::DAT_007198e8 - 2u)) * 0.15f);
     FUN_0040a5d0();
     write_field_49c(dat_0223f100, 1);
     FUN_005b9f30(&dat_0224e6c0, 4, "****************%s End****************", "GameInit");
